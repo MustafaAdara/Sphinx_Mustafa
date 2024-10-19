@@ -17,6 +17,8 @@ namespace Application.interfaces
         Task DeleteProduct(string id);
         Task<IEnumerable<ProductDto>> GetProductWithPaging(int page, int pageSize);
         Task<int> CountProducts();
+        Task<IEnumerable<ProductDto>> GetAllActiveProducts();
+
 
     }
 }

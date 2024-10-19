@@ -22,6 +22,14 @@ namespace Infrastructure.Repositories
             return await _context.Products.CountAsync();
         }
 
+        public async Task<IEnumerable<Product>> GetAllActive()
+        {
+            return await _context.Products
+                            .Where(p => p.IsActive)
+                            .OrderBy(p => p.Name)
+                            .ToListAsync();
+        }
+
         public async Task<IEnumerable<Product>> GetProductWithPaging(int page, int pageSize)
         {
             var query = _context.Products.AsQueryable();

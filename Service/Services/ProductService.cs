@@ -48,6 +48,12 @@ namespace Application.Services
             await _unitOfWork.Complete();
         }
 
+        public async Task<IEnumerable<ProductDto>> GetAllActiveProducts()
+        {
+            var activeProducts = await _unitOfWork.productRepository.GetAllActive();
+            return _mapper.Map<IEnumerable<ProductDto>>(activeProducts);
+        }
+
         public async Task<IEnumerable<ProductDto>> GetAllAync()
         {
             var products = await _unitOfWork.productRepository.GetAll();

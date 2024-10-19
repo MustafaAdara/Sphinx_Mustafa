@@ -12,5 +12,7 @@ namespace Domain.Interfaces.Repositories
         Task<IEnumerable<Product>> GetProductWithPaging(int page, int pageSize);
         Task<bool> HasRelatedClientProductsAsync(string id);
         Task<int> CountProducts();
+        Task<IEnumerable<Product>> GetAllActive();
+
     }
 }

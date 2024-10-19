@@ -1,0 +1,50 @@
+﻿@page
+@model Sphinx_Mustafa.Pages.ClientProduct.AddClientProductModel
+@{
+    ViewData["Title"] = "Add Product to Client";
+}
+
+<h1>Add Product to Client</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="ClientProduct.ClientId"></label>
+        <select asp-for="ClientProduct.ClientId" asp-items="Model.ClientList" class="form-control">
+            <option value="">-- Select Client --</option>
+        </select>
+        <span asp-validation-for="ClientProduct.ClientId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ClientProduct.ProductId"></label>
+        <select asp-for="ClientProduct.ProductId" asp-items="Model.ProductList" class="form-control">
+            <option value="">-- Select Product --</option>
+        </select>
+        <span asp-validation-for="ClientProduct.ProductId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ClientProduct.StartDate"></label>
+        <input asp-for="ClientProduct.StartDate" class="form-control" type="date" />
+        <span asp-validation-for="ClientProduct.StartDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ClientProduct.EndDate"></label>
+        <input asp-for="ClientProduct.EndDate" class="form-control" type="date" />
+        <span asp-validation-for="ClientProduct.EndDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ClientProduct.License"></label>
+        <input asp-for="ClientProduct.License" class="form-control" />
+        <span asp-validation-for="ClientProduct.License" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add</button>
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
