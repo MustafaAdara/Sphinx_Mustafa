@@ -1,0 +1,48 @@
+﻿@page "{id:string}"
+@model Sphinx_Mustafa.Pages.Client.EditClientModel
+@{
+    ViewData["Title"] = "Edit Client";
+}
+<h1>Edit Client</h1>
+
+<form method="post">
+    <input type="hidden" asp-for="ClientDto.Id" />
+    <div class="form-group">
+        <label asp-for="ClientDto.Name"></label>
+        <input asp-for="ClientDto.Name" class="form-control" />
+        <span asp-validation-for="ClientDto.Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ClientDto.Code"></label>
+        <input asp-for="ClientDto.Code" class="form-control" readonly />
+        <span asp-validation-for="ClientDto.Code" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Class</label>
+        <select asp-for="ClientDto.Class" class="form-control">
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+        </select>
+    </div>
+
+    <div class="form-control">
+        <label>State</label>
+        <select asp-for="ClientDto.State" class="form-control">
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+            <option value="Pending">Pending</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-page="Index" class="btn btn-secondary">Back to List</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

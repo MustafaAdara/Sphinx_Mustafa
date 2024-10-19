@@ -1,0 +1,21 @@
+﻿@page
+@model Sphinx_Mustafa.Pages.ClientProduct.UpdateClientProductModel
+@{
+}
+<h2>Update Client Product</h2>
+
+<form method="post">
+    <div>
+        <label>License</label>
+        <input asp-for="ClientProductDto.License" />
+    </div>
+    <div>
+        <label>Start Date</label>
+        <input asp-for="ClientProductDto.StartDate" type="date" />
+    </div>
+    <div>
+        <label>End Date</label>
+        <input asp-for="ClientProductDto.EndDate" type="date" />
+    </div>
+    <button type="submit">Update</button>
+</form>

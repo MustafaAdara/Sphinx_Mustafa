@@ -1,0 +1,34 @@
+﻿@page
+@model Sphinx_Mustafa.Pages.ClientProduct.ClientDetailsModel
+@{
+}
+<h2>Client Details</h2>
+<div>
+    <h3>@Model.Client.Name</h3>
+    <p>Code: @Model.Client.Code</p>
+    <p>Class: @Model.Client.Class</p>
+    <p>State: @Model.Client.State</p>
+</div>
+
+<h2>Client Products</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>License</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model.Client.ClientProducts.OrderBy(cp => cp.ProductName))
+        {
+            <tr>
+                <td>@product.ProductName</td>
+                <td>@product.License</td>
+                <td>@product.StartDate</td>
+                <td>@product.EndDate</td>
+            </tr>
+        }
+    </tbody>
+</table>
