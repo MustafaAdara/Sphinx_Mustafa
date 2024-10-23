@@ -13,5 +13,6 @@ namespace Domain.Interfaces.Repositories
         Task<int> CountAsync();
         Task<bool> ExistsAsync(string id);
         Task<Client> GetByIdWithProducts(string id);
+        Task<bool> ClientCodeExist(Client client);
     }
 }

@@ -3,43 +3,58 @@
 @{
     ViewData["Title"] = "Edit Client";
 }
-<h1>Edit Client</h1>
 
-<form method="post">
-    <input type="hidden" asp-for="ClientDto.Id" />
-    <div class="form-group">
-        <label asp-for="ClientDto.Name"></label>
-        <input asp-for="ClientDto.Name" class="form-control" />
-        <span asp-validation-for="ClientDto.Name" class="text-danger"></span>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white text-center">
+                    <h2>Edit Client</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <input type="hidden" asp-for="ClientDto.Id" />
+
+                        <div class="form-group mb-3">
+                            <label asp-for="ClientDto.Name" class="form-label"></label>
+                            <input asp-for="ClientDto.Name" class="form-control" />
+                            <span asp-validation-for="ClientDto.Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="ClientDto.Code" class="form-label"></label>
+                            <input asp-for="ClientDto.Code" class="form-control" readonly />
+                            <span asp-validation-for="ClientDto.Code" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="ClientClass" class="form-label">Class</label>
+                            <select asp-for="ClientDto.Class" class="form-control">
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label for="ClientState" class="form-label">State</label>
+                            <select asp-for="ClientDto.State" class="form-control">
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                                <option value="Pending">Pending</option>
+                            </select>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-success">Save</button>
+                            <a asp-page="Index" class="btn btn-secondary">Back to List</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="form-group">
-        <label asp-for="ClientDto.Code"></label>
-        <input asp-for="ClientDto.Code" class="form-control" readonly />
-        <span asp-validation-for="ClientDto.Code" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label>Class</label>
-        <select asp-for="ClientDto.Class" class="form-control">
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-        </select>
-    </div>
-
-    <div class="form-control">
-        <label>State</label>
-        <select asp-for="ClientDto.State" class="form-control">
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
-            <option value="Pending">Pending</option>
-        </select>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Save</button>
-    <a asp-page="Index" class="btn btn-secondary">Back to List</a>
-</form>
+</div>
 
 @section Scripts {
     @{

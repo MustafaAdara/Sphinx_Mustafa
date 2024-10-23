@@ -21,17 +21,36 @@ namespace Application.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+
         public async Task AddClientWithActiveProduct(ClientProductDto clientProductDto)
         {
-            var clientProduct = _mapper.Map<ClientProduct>(clientProductDto);
-
-            var product = await _unitOfWork.productRepository.GetById(clientProduct.ProductId);
-            if (product == null || !product.IsActive)
+            try
             {
-                throw new InvalidOperationException("Cannot add an inactive or non-existent product to a client.");
+                if (string.IsNullOrEmpty(clientProductDto.ProductId) || string.IsNullOrEmpty(clientProductDto.ClientId))
+                {
+                    throw new InvalidOperationException("Client ID and Product ID must be provided.");
+                }
+                var clientProduct = _mapper.Map<ClientProduct>(clientProductDto);
+
+                var existingProduct = await _unitOfWork.productRepository.GetById(clientProductDto.ProductId);
+
+                if (existingProduct == null || !existingProduct.IsActive)
+                {
+                    throw new InvalidOperationException("Cannot add an inactive or non-existent product to a client.");
+                }
+                if (string.IsNullOrEmpty(clientProduct.ProductId))
+                {
+                    throw new InvalidOperationException("Product ID must be set.");
+                }
+                clientProduct.Product = existingProduct;
+                await _unitOfWork.clientProductRepository.Add(clientProduct);
+                await _unitOfWork.Complete();
             }
-            await _unitOfWork.clientProductRepository.Add(clientProduct);
-            await _unitOfWork.Complete();
+            catch (Exception ex)
+            {
+                new Exception(ex.Message, ex);
+            }
+            
         }
 
         public async Task DeleteAsync(string clientId, string productId)
@@ -44,6 +63,12 @@ namespace Application.Services
         {
             var clientspro = await _unitOfWork.clientProductRepository.GetAllByClientId(clientId);
             return _mapper.Map<IEnumerable<ClientProductDto>>(clientspro);
+        }
+
+        public async Task<IEnumerable<ClientProductDto>> GetAllWithAllRef()
+        {
+            var clientProducts = await _unitOfWork.clientProductRepository.GetAllWithAllRef();
+            return _mapper.Map<IEnumerable<ClientProductDto>>(clientProducts);
         }
 
         public async Task<ClientProductDto> GetByIdAsync(string clientId, string productId)

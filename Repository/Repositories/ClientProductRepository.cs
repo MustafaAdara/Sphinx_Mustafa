@@ -30,6 +30,10 @@ namespace Infrastructure.Repositories
                             .OrderBy(cp => cp.Product.Name)
                             .ToListAsync();
         }
+        public async Task<IEnumerable<ClientProduct>> GetAllWithAllRef()
+        {
+            return await _context.ClientProducts .Include(cp => cp.Product).Include(c =>c.Client).ToListAsync();
+        }
 
         public async Task<ClientProduct> GetByIdAsync(string clientId, string productId)
         {
@@ -39,5 +43,6 @@ namespace Infrastructure.Repositories
                                 .FirstOrDefaultAsync(cp => cp.ClientId == clientId && cp.ProductId == productId);
 
         }
+
     }
 }

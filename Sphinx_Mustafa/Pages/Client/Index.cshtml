@@ -7,10 +7,6 @@
 
 <h1>Clients</h1>
 
-<p>
-    <a asp-page="Create" class="btn btn-primary">Create New</a>
-</p>
-
 <table class="table table-striped table-hover">
     <thead>
         <tr>
@@ -30,9 +26,13 @@
                 <td>@client.Class</td>
                 <td>@client.State</td>
                 <td>
-                    <a asp-page="./Edit" asp-route-id="@client.Id" class="btn btn-sm btn-primary">Edit</a>
-                    <a asp-page="./Details" asp-route-id="@client.Id" class="btn btn-sm btn-info">Details</a>
-                    <a asp-page="./Delete" asp-route-id="@client.Id" class="btn btn-sm btn-danger">Delete</a>
+                    <a asp-page="/Client/ClientDetails" asp-route-id="@client.Id" class="btn btn-sm btn-secondary">Details</a>
+                    <a asp-page="./EditClient" asp-route-id="@client.Id" class="btn btn-sm btn-warning">Edit</a>
+                     <form method="post" asp-page-handler="Delete" asp-route-id="@client.Id" class="d-inline" 
+                            onsubmit="return confirmDelete(event, '@client.Name');">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+
                 </td>
             </tr>
         }
@@ -48,4 +48,32 @@
             </li>
         }
     </ul>
-</nav
+</nav>
+
+<div class="d-flex justify-content-center">
+    <a asp-page="./AddClient" class="btn btn-info">Add New Client</a>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmDelete(event,clientName) {
+            event.preventDefault();
+            const form = event.target;
+            return Swal.fire({
+                title: `Are you sure you want to delete ${clientName}?`,
+                text: "You won't be able to revert this! Do you really want to delete ?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+            return false;
+        }
+    </script>
+}

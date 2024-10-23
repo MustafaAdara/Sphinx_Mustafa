@@ -12,6 +12,8 @@ namespace Application.DTOs
         public string ProductId { get; set; }
         public string ClientId { get; set; }
         public string ProductName { get; set; }
+        public string ClientName { get; set; }
+
         [Required]
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }

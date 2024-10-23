@@ -16,17 +16,24 @@ namespace Sphinx_Mustafa.Pages.Products
             _productService = productService;
         }
 
-        public IEnumerable<ProductDto> Products { get; set; }
+        public IEnumerable<ProductDto> Products { get; set; } 
         public int TotalPages { get; set; }
         public int CurrentPage { get; set; }
-        public async Task OnGetAsync(int page = 1, int pageSize = 10)
+        public int PageSize { get; set; } = 5;
+        public async Task OnGetAsync(int pageNumber = 1)
         {
-            CurrentPage = page;
-
-            Products = await _productService.GetProductWithPaging(page, pageSize);
+            CurrentPage = pageNumber;
              
             var TotalProduct = await _productService.CountProducts();
-            TotalPages = (int)Math.Ceiling(TotalProduct / (double)pageSize);
+            TotalPages = (int)Math.Ceiling(TotalProduct / (double)PageSize);
+
+            Products = await _productService.GetProductWithPaging(pageNumber, PageSize);
+
+        }
+        public async Task<IActionResult> OnPostDeleteAsync(string id)
+        {
+            await _productService.DeleteProduct(id);
+            return RedirectToPage();
         }
     }
 }

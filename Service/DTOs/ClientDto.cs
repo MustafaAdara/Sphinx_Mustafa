@@ -14,7 +14,6 @@ namespace Application.DTOs
         [MaxLength(50), MinLength(2)]
         public string Name { get; set; }
         [Required]
-        [MaxLength(9)]
         [RegularExpression(@"^\d{9}$", ErrorMessage = "Code Must Be 9 Numbers")]
         public double Code { get; set; }
         [Required]

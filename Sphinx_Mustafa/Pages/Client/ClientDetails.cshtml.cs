@@ -1,31 +1,31 @@
 using Application.DTOs;
 using Application.interfaces;
-//using Application.Services;
+using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Sphinx_Mustafa.Pages.ClientProduct
+namespace Sphinx_Mustafa.Pages.Client
 {
     public class ClientDetailsModel : PageModel
     {
-        private readonly IClientService _clientService;
+        private readonly IClientService clientService;
 
         public ClientDetailsModel(IClientService clientService)
         {
-            _clientService = clientService;
+            this.clientService = clientService;
         }
 
         public ClientDetailsDto Client { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string clientId)
+        public async Task<IActionResult> OnGetAsync(string id)
         {
-            Client = await _clientService.GetClientDetails(clientId);
+            Client = await clientService.GetClientDetails(id);
             if (Client == null)
             {
                 return NotFound();
             }
             return Page();
+
         }
     }
 }

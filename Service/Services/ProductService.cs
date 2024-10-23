@@ -78,7 +78,12 @@ namespace Application.Services
             var product = _mapper.Map<Product>(productDto);
             var editedProduct = await _unitOfWork.productRepository.GetById(product.Id);
             if (editedProduct == null) return;
-            _unitOfWork.productRepository.Update(product);
+
+            editedProduct.Name = product.Name;
+            editedProduct.Description = product.Description;
+            editedProduct.IsActive = product.IsActive;
+            
+            _unitOfWork.productRepository.Update(editedProduct);
             await _unitOfWork.Complete();
         }
 

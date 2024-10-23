@@ -1,0 +1,71 @@
+﻿@page
+@model Sphinx_Mustafa.Pages.ClientProduct.GetCLientProducts
+@{
+}
+<h1>Clients with products</h1>
+
+@if (Model.ClientProducts is not null && Model.ClientProducts.Any())
+{
+    <table class="table table-striped ">
+        <thead class="thead-dark">
+            <tr>
+                <th>Client Name</th>
+                <th>Product Name</th>
+                <th>License</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var clientProduct in Model.ClientProducts)
+            {
+                <tr>
+                    <td>@clientProduct.ClientName</td>
+                    <td>@clientProduct.ProductName</td>
+                    <td>@clientProduct.License</td>
+                    <td>@clientProduct.StartDate</td>
+                    <td>@clientProduct.EndDate</td>
+                    <td>  
+                        <a asp-page="./UpdateClientProduct" asp-route-productId="@clientProduct.ProductId" asp-route-clientId="@clientProduct.ClientId" class="btn btn-warning btn-sm">Update</a>
+                        <form method="post" asp-page-handler="Delete" asp-route-productId="@clientProduct.ProductId" 
+                                asp-route-clientId="@clientProduct.ClientId" class="d-inline"
+                              onsubmit="return confirmDelete(event, '@clientProduct.ClientName');">
+                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    </td> 
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No clientProducts available.</p>
+}
+<div class="d-flex justify-content-center">
+    <a asp-page="./AddClientProduct" class="btn btn-primary">Add New ClientProduct</a>
+</div>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmDelete(event, clientName) {
+            event.preventDefault();
+            const form = event.target;
+            return Swal.fire({
+                title: `Are you sure you want to delete ${clientName}?`,
+                text: "You won't be able to revert this! Do you really want to delete ?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+            return false;
+        }
+    </script>
+}

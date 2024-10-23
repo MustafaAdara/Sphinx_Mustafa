@@ -10,6 +10,7 @@ namespace Application.interfaces
 {
     public interface IClientProductService
     {
+        public Task<IEnumerable<ClientProductDto>> GetAllWithAllRef();
         public Task<IEnumerable<ClientProductDto>> GetAllByClientId(string clientId);
         Task AddClientWithActiveProduct(ClientProductDto clientProductDto);
         Task<ClientProductDto> GetByIdAsync(string clientId, string productId);

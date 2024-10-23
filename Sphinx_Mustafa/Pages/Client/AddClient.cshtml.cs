@@ -11,7 +11,7 @@ namespace Sphinx_Mustafa.Pages.Client
 
         [BindProperty]
         public ClientDto ClientDto { get; set; }
-
+        public string WarningMessage { get; set; }
         public AddClientModel(IClientService clientService)
         {
             _clientService = clientService;
@@ -19,11 +19,11 @@ namespace Sphinx_Mustafa.Pages.Client
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            if (await _clientService.IsClientExitsWithSameCode(ClientDto))
             {
-                return Page();
+                WarningMessage = "A client with this code already exists.";
+                return Page(); 
             }
-
             await _clientService.AddClient(ClientDto);
             return RedirectToPage("Index");
         }

@@ -35,16 +35,11 @@ namespace Sphinx_Mustafa.Pages.ClientProduct
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                await PopulateDropdowns();
-                return Page();
-            }
 
             try
             {
                 await _clientProductService.AddClientWithActiveProduct(ClientProduct);
-                return RedirectToPage("./Index");
+                return RedirectToPage("./GetCLientProducts");
             }
             catch (InvalidOperationException ex)
             {

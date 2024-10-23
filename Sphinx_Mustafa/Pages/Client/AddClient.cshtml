@@ -1,9 +1,18 @@
 ﻿@page
 @model Sphinx_Mustafa.Pages.Client.AddClientModel
 @{
-    ViewData["Title"] = "Add Client";
+    ViewData["Title"] = "AddClient";
 }
 <h1>Add New Client</h1>
+
+
+@if (!string.IsNullOrEmpty(Model.WarningMessage))
+{
+    <div class="alert alert-danger">
+        @Model.WarningMessage
+    </div>
+}
+
 <form method="post">
     <div class ="form-group">
         <label asp-for="ClientDto.Name"></label>
@@ -25,7 +34,7 @@
             <option value="C">C</option>
         </select>
     </div>
-    <div class="form-control">
+    <div class="form-group">
         <label>State</label>
         <select asp-for="ClientDto.State" class="form-control">
             <option value="Active">Active</option>

@@ -14,9 +14,10 @@ namespace Application.Mapping
 
             CreateMap<ClientDetailsDto, Client>().ReverseMap();
 
-            CreateMap<ClientProduct, ClientProductDto>().ReverseMap();
+            CreateMap<ClientProductDto, ClientProduct>().ReverseMap();
             CreateMap<ClientProduct, ClientProductDto>()
-            .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.Name));
+            .ForMember(dst => dst.ProductName, opt => opt.MapFrom(src => src.Product.Name))
+            .ForMember(c => c.ClientName, cp => cp.MapFrom(p => p.Client.Name));
 
         }
 

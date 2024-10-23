@@ -24,6 +24,10 @@ namespace Application.Services
         public async Task AddClient(ClientDto clientDto)
         {
             var client = _mapper.Map<Client>(clientDto);
+            if(await _unitOfWork.clientRepository.ClientCodeExist(client))
+            {
+                throw new Exception("A client with this code already exists.");
+            }
             client.Id = Guid.NewGuid().ToString();
             await _unitOfWork.clientRepository.Add(client);
             await _unitOfWork.Complete();
@@ -78,6 +82,12 @@ namespace Application.Services
         public async Task<int> CountClients()
         {
             return await _unitOfWork.clientRepository.CountAsync();
+        }
+
+        public async Task<bool> IsClientExitsWithSameCode(ClientDto clientDto)
+        {
+            var client = _mapper.Map<Client>(clientDto);
+            return await _unitOfWork.clientRepository.ClientCodeExist(client);
         }
     }
 }

@@ -16,6 +16,11 @@ namespace Infrastructure.Repositories
         {
         }
 
+        public async Task<bool> ClientCodeExist(Client client)
+        {
+            return await _context.Clients.AnyAsync(c => c.Code == client.Code);
+        }
+
         public async Task<int> CountAsync()
         {
             return await _context.Clients.CountAsync();

@@ -14,8 +14,9 @@ namespace Sphinx_Mustafa.Pages.Client
         }
 
         public IEnumerable<ClientDto> Clients { get; set; }
+
         public int CurrentPage { get; set; } = 1;
-        public int PageSize { get; set; } = 10;
+        public int PageSize { get; set; } = 5;
         public int TotalPages { get; set; }
         public async Task OnGetAsync(int pageNumber = 1)
         {
@@ -24,6 +25,18 @@ namespace Sphinx_Mustafa.Pages.Client
             TotalPages = (int)Math.Ceiling(totalClients / (double)PageSize);
 
             Clients = await _clientService.GetAllPagedClient(CurrentPage, PageSize);
+
+        }
+
+        public async Task<IActionResult> OnPostDeleteAsync(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+
+            await _clientService.DeleteClient(id);
+            return RedirectToPage();
         }
     }
 }

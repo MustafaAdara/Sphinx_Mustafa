@@ -1,3 +1,5 @@
+using Application.interfaces;
+using Application.Services;
 using Domain.Interfaces;
 using Domain.Interfaces.Repositories;
 using Infrastructure;
@@ -26,6 +28,11 @@ namespace Sphinx_Mustafa
             builder.Services.AddScoped<IClientRepository, ClientRepository>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IClientProductRepository, ClientProductRepository>();
+
+            builder.Services.AddScoped<IClientService, ClientService>();
+            builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<IClientProductService, ClientProductService>();
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
             var app = builder.Build();

@@ -18,5 +18,6 @@ namespace Application.interfaces
         Task<ClientDto> GetClientById(string id);
         Task<ClientDetailsDto> GetClientDetails(string id);
         Task<int> CountClients();
+        Task<bool> IsClientExitsWithSameCode(ClientDto clientDto);
     }
 }
